@@ -9,13 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Button("Scan ID") {
-                
-            }
-            Button("Student List") {
-                
-            }
+        NavigationStack {
+            NavigationLink("Scan ID", destination: ScanID())
+            NavigationLink("Guest List", destination: StudentListView())
             Button("Guest Application") {
                 
             }
