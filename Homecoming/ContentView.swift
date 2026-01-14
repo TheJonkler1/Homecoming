@@ -15,6 +15,9 @@ struct ContentView: View {
             Button("Guest Application") {
                 
             }
+            HStack{
+                
+            }
         }
     }
 }
