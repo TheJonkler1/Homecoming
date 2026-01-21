@@ -10,19 +10,28 @@ import AVFoundation
 import UIKit
 
 struct ScanID: View {
+    @State var scannedText: String = "Waiting for QR code…"
     var body: some View {
         Text("ScanID")
-        
-        Rectangle()
-            .frame(width: 600, height: 600)
-            .foregroundStyle(Color.gray.opacity(0.6))
-            .overlay {
-                Text("Camera will go here")
+        VStack {
+            CameraScannerView { code in
+                scannedText = code
             }
+            
+            VStack {
+                Spacer()
+                
+                Text(scannedText)
+                    .font(.headline)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(.black.opacity(0.7))
+                    .foregroundColor(.white)
+            }
+        }
+        .ignoresSafeArea()
     }
 }
-
-
 
 #Preview {
     ScanID()

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
         NavigationStack {
             NavigationLink("Scan ID", destination: ScanID())
@@ -21,6 +22,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView()
