@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct StudentListView: View {
-    @State var arrayOfStudents: [String] = ["George", "Devin", "Abhi", "Leo"]
+    @State private var people: [Student] = []
     var body: some View {
+        Button("Add Student") {
+            people.append(Student(name: "New Student", ID: 123456, email: "new@student.com", grade: "10", parentName: "New Parent", parentName2: "New Parent 2", parentPhoneNumber: "Phone Number"))
+        }
         List {
-            ForEach(arrayOfStudents, id: \.self) { student in
-                Text(student)
+            ForEach(people) { person in
+                Text(person.name)
             }
         }
     }

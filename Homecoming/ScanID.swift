@@ -31,6 +31,22 @@ struct ScanID: View {
         }
         .ignoresSafeArea()
     }
+    
+    func sendEmail() {
+        let subject = "Homecoming Ticket Receipt"
+        let body = "Thank you [student name] for purchasing your [year] Homecoming ticket! \n\n This is a confirmation of your $[price] purchase, placed on [mm/dd/yyyy] at [time]. If this was not you, please contact Ms. Monahan at laura.monahan@d214.org or visit her in the ARC in room 123. \n\n ~ John Hersey High School"
+        
+        let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        let mailToString = "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)"
+        
+        if let url = URL(string: mailToString) {
+            UIApplication.shared.open(url)
+        }
+        
+    }
+    
 }
 
 #Preview {

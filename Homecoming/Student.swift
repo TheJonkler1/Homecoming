@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct Student: Identifiable {
+    let id = UUID()
     var name: String
-    var id: Int
+    var ID: Int
     var email: String
     var grade: String
     var parentName: String
