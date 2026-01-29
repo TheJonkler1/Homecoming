@@ -11,6 +11,7 @@ import UIKit
 
 struct ScanID: View {
     @State var scannedText: String = "Waiting for QR code…"
+    @State var email = "gkoroulis7201@stu.d214.org"
     var body: some View {
         Text("ScanID")
         VStack {
