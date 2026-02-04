@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Student: Identifiable {
+class Student: Identifiable {
     let id = UUID()
     var name: String
     var ID: Int
@@ -18,4 +18,16 @@ struct Student: Identifiable {
     var parentPhoneNumber: String
     var timeCheckedIn: Date?
     var timeCheckedOut: Date?
+    
+    init(name: String, ID: Int, email: String, grade: String, parentName: String, parentName2: String, parentPhoneNumber: String, timeCheckedIn: Date? = nil, timeCheckedOut: Date? = nil) {
+        self.name = name
+        self.ID = ID
+        self.email = email
+        self.grade = grade
+        self.parentName = parentName
+        self.parentName2 = parentName2
+        self.parentPhoneNumber = parentPhoneNumber
+        self.timeCheckedIn = timeCheckedIn
+        self.timeCheckedOut = timeCheckedOut
+    }
 }
