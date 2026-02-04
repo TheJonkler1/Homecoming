@@ -9,25 +9,39 @@ import SwiftUI
 
 class Student: Identifiable {
     let id = UUID()
-    var name: String
-    var ID: Int
-    var email: String
-    var grade: String
-    var parentName: String
-    var parentName2: String
-    var parentPhoneNumber: String
-    var timeCheckedIn: Date?
-    var timeCheckedOut: Date?
+    let altID: Int
+    var checkInTime: Date?
+    var checkOutTime: Date?
+    var checkedInOrOut: Bool
+    let firstName: String
+    let guestCheckIn: String
+    let guestName: String
+    let guestParentPhone: String
+    let guestSchool: String
+    let idNumber: Int
+    let lastName: String
+    let studentEmail: String
+    let studentParentCell: String
+    let studentParentFirstName: String
+    let studentParentLastName: String
+    let studentParentPhone: String
     
-    init(name: String, ID: Int, email: String, grade: String, parentName: String, parentName2: String, parentPhoneNumber: String, timeCheckedIn: Date? = nil, timeCheckedOut: Date? = nil) {
-        self.name = name
-        self.ID = ID
-        self.email = email
-        self.grade = grade
-        self.parentName = parentName
-        self.parentName2 = parentName2
-        self.parentPhoneNumber = parentPhoneNumber
-        self.timeCheckedIn = timeCheckedIn
-        self.timeCheckedOut = timeCheckedOut
+    init(altID: Int, checkInTime: Date? = nil, checkOutTime: Date? = nil, checkedInOrOut: Bool, firstName: String, guestCheckIn: String, guestName: String, guestParentPhone: String, guestSchool: String, idNumber: Int, lastName: String, studentEmail: String, studentParentCell: String, studentParentFirstName: String, studentParentLastName: String, studentParentPhone: String) {
+        self.altID = altID
+        self.checkInTime = checkInTime
+        self.checkOutTime = checkOutTime
+        self.checkedInOrOut = checkedInOrOut
+        self.firstName = firstName
+        self.guestCheckIn = guestCheckIn
+        self.guestName = guestName
+        self.guestParentPhone = guestParentPhone
+        self.guestSchool = guestSchool
+        self.idNumber = idNumber
+        self.lastName = lastName
+        self.studentEmail = studentEmail
+        self.studentParentCell = studentParentCell
+        self.studentParentFirstName = studentParentFirstName
+        self.studentParentLastName = studentParentLastName
+        self.studentParentPhone = studentParentPhone
     }
 }
