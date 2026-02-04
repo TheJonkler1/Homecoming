@@ -1,5 +1,5 @@
 //
-//  TaskViewModel.swift
+//  StudentViewModel.swift
 //  Homecoming
 //
 //  Created by George Koroulis on 2/2/26.
@@ -7,7 +7,7 @@
 
 import CloudKit
 
-@Observable class TaskViewModel{
+@Observable class StudentViewModel{
     var student: [Student] = []
     let database = CKContainer.default().privateCloudDatabase
     
