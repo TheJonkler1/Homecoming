@@ -10,19 +10,19 @@ import AVFoundation
 import UIKit
 
 struct ScanID: View {
-    @State var scannedText: String = "Waiting for QR code…"
+    @State var alternateID: String = "Waiting for QR code…"
     @State var email = "gkoroulis7201@stu.d214.org"
     var body: some View {
         Text("ScanID")
         VStack {
             CameraScannerView { code in
-                scannedText = code
+                alternateID = code
             }
             
             VStack {
                 Spacer()
                 
-                Text(scannedText)
+                Text(alternateID)
                     .font(.headline)
                     .padding()
                     .frame(maxWidth: .infinity)
