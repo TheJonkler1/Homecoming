@@ -9,7 +9,7 @@ import CloudKit
 
 @Observable class StudentViewModel{
     var student: [Student] = []
-    let database = CKContainer.default().privateCloudDatabase
+    let database = CKContainer.default().publicCloudDatabase
     let scannedID = 197063
     
     init() {
@@ -48,6 +48,7 @@ import CloudKit
                         let studentParentLastName = record["studentParentLastName"] as? String ?? ""
                         let studentParentPhone = record["studentParentPhone"] as? String ?? ""
                         let currentStudent = Student(altID: altID, checkInTime: checkInTime, checkOutTime: checkOutTime, checkedInOrOut: checkedInOrOut, firstName: firstName, guestCheckIn: guestCheckIn, guestName: guestName, guestParentPhone: guestParentPhone, guestSchool: guestSchool, idNumber: idNumber, lastName: lastName, studentEmail: studentEmail, studentParentCell: studentParentCell, studentParentFirstName: studentParentFirstName, studentParentLastName: studentParentLastName, studentParentPhone: studentParentPhone)
+                        print(currentStudent.firstName + " " + currentStudent.lastName)
                         
                         downloadedStudent.append(currentStudent)
                         

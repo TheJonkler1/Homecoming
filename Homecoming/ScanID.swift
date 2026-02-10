@@ -10,6 +10,8 @@ import AVFoundation
 import UIKit
 
 struct ScanID: View {
+    @Environment(StudentViewModel.self) var viewModel
+
     @State var alternateID: String = "Waiting for QR code…"
     @State var email = "gkoroulis7201@stu.d214.org"
     var body: some View {
