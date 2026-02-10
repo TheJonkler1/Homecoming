@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct StudentListView: View {
+    @Environment(StudentViewModel.self) var viewModel
+
     @State private var people: [Student] = []
     var body: some View {
         Button("Add Student") {

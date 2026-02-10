@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GuestApplication: View {
+    @Environment(StudentViewModel.self) var viewModel
+
     @State var guestName: String = ""
     @State var guestPhone: String = ""
     @State var guestGrade: String = ""

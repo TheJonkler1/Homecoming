@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(StudentViewModel.self) var viewModel
     
     var body: some View {
         NavigationStack {
