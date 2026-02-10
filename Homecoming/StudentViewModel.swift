@@ -47,7 +47,7 @@ import CloudKit
                         let studentParentFirstName = record["studentParentFirstName"] as? String ?? ""
                         let studentParentLastName = record["studentParentLastName"] as? String ?? ""
                         let studentParentPhone = record["studentParentPhone"] as? String ?? ""
-                        let currentStudent = Student(altID: altID, checkedInOrOut: checkedInOrOut, firstName: firstName, guestCheckIn: guestCheckIn, guestName: guestName, guestParentPhone: guestParentPhone, guestSchool: guestSchool, idNumber: idNumber, lastName: lastName, studentEmail: studentEmail, studentParentCell: studentParentCell, studentParentFirstName: studentParentFirstName, studentParentLastName: studentParentLastName, studentParentPhone: studentParentPhone)
+                        let currentStudent = Student(altID: altID, checkInTime: checkInTime, checkOutTime: checkOutTime, checkedInOrOut: checkedInOrOut, firstName: firstName, guestCheckIn: guestCheckIn, guestName: guestName, guestParentPhone: guestParentPhone, guestSchool: guestSchool, idNumber: idNumber, lastName: lastName, studentEmail: studentEmail, studentParentCell: studentParentCell, studentParentFirstName: studentParentFirstName, studentParentLastName: studentParentLastName, studentParentPhone: studentParentPhone)
                         
                         downloadedStudent.append(currentStudent)
                         
