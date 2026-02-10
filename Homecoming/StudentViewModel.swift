@@ -9,7 +9,7 @@ import CloudKit
 
 @Observable class StudentViewModel{
     var student: [Student] = []
-    let database = CKContainer.default().privateCloudDatabase
+    let database = CKContainer.default().publicCloudDatabase
     let scannedID = 197063
     
     init() {
