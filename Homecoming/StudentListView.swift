@@ -11,11 +11,11 @@ struct StudentListView: View {
     @State private var people: [Student] = []
     var body: some View {
         Button("Add Student") {
-            people.append(Student(name: "New Student", ID: 123456, email: "new@student.com", grade: "10", parentName: "New Parent", parentName2: "New Parent 2", parentPhoneNumber: "Phone Number"))
+            people.append(Student(altID: 123456, checkedInOrOut: false, firstName: "George", guestCheckIn: "12:00", guestName: "N/A", guestParentPhone: "000-000-0000", guestSchool: "N/A", idNumber: 123456, lastName: "Koroulis", studentEmail: "gkoroulis7201@stu.d214.org", studentParentCell: "000-000-0000", studentParentFirstName: "Dad", studentParentLastName: "Koroulis", studentParentPhone: "000-000-0000"))
         }
         List {
             ForEach(people) { person in
-                Text(person.name)
+                Text(person.firstName + " " + person.lastName)
             }
         }
     }
