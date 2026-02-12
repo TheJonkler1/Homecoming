@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct HomecomingApp: App {
+    @State var viewModel: StudentViewModel = StudentViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(viewModel)
         }
     }
 }

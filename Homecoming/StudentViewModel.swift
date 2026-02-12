@@ -19,10 +19,19 @@ class StudentViewModel {
     }
     
     let database = CKContainer.default().publicCloudDatabase
+    let scannedID = 197063
     
-    func pullFromDatabase(altID: Int) {
-        let predicate = NSPredicate(format: "altIDNumber == %d", altID)
-        let query = CKQuery(recordType: "Student", predicate: predicate)
+    init() {
+        pullFromDatabase()
+    }
+    
+    func addStudent() {
+        
+    }
+    
+    func pullFromDatabase() {
+        let predicate = NSPredicate(format: "altIDNumber", scannedID)
+        let query = CKQuery(recordType: "altIDNumber", predicate: predicate)
         
         database.fetch(withQuery: query) { result in
             switch result {
