@@ -19,6 +19,7 @@ struct ScanID: View {
         VStack {
             CameraScannerView { code in
                 alternateID = code
+                print(alternateID)
             }
             
             VStack {
