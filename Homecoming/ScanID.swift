@@ -10,20 +10,17 @@ import AVFoundation
 import UIKit
 
 struct ScanID: View {
+    
     @Environment(StudentViewModel.self) var viewModel
-
-    @State var alternateID: String = "Waiting for QR code…"
+    @State var alternateID: String = "Waiting for Barcode…"
     @State var email = ""
-    @State var viewModel = StudentViewModel()
-
+    
     var body: some View {
         VStack {
+            
             CameraScannerView { code in
-                alternateID = code
-                
-                if let scannedAltID = Int(code) {
-                    viewModel.scannedAltID = scannedAltID
-                }
+                alternateID = code.trimmingCharacters(in: .whitespacesAndNewlines)
+                viewModel.setScannedAltID(alternateID)
             }
             
             VStack {
@@ -36,7 +33,7 @@ struct ScanID: View {
                     .background(.black.opacity(0.7))
                     .foregroundColor(.white)
                 
-                if let student = viewModel.students.first {
+                if let student = viewModel.scannedStudent {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Name: \(student.firstName) \(student.lastName)")
                         Text("Email: \(student.studentEmail)")
@@ -60,7 +57,7 @@ struct ScanID: View {
         }
         .ignoresSafeArea()
     }
-
+    
     func sendEmail(to studentEmail: String) {
         let subject = "Homecoming Ticket Receipt"
         let body = "Thank you \(alternateID) for purchasing your Homecoming ticket!\n\nThis is a confirmation of your purchase. Please bring your ID to Homecoming to enter."
@@ -78,4 +75,5 @@ struct ScanID: View {
 
 #Preview {
     ScanID()
+        .environment(StudentViewModel())
 }

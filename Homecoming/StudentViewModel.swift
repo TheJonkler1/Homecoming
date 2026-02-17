@@ -10,27 +10,25 @@ import SwiftUI
 
 @Observable
 class StudentViewModel {
+    
     var students: [Student] = []
-    var scannedAltID: Int? {
-        didSet {
-            guard let scannedAltID else { return }
-            pullFromDatabase(altID: scannedAltID)
-        }
+    var scannedAltID: String?
+    
+    var scannedStudent: Student? {
+        students.first
     }
     
     let database = CKContainer.default().publicCloudDatabase
-    let scannedID = 197063
     
-    init() {
-        pullFromDatabase()
+    init() { }
+    
+    func setScannedAltID(_ id: String) {
+        scannedAltID = id
+        pullFromDatabase(altID: id)
     }
     
-    func addStudent() {
-        
-    }
-    
-    func pullFromDatabase() {
-        let predicate = NSPredicate(format: "altIDNumber", scannedID)
+    func pullFromDatabase(altID: String) {
+        let predicate = NSPredicate(format: "altIDNumber == %@", altID)
         let query = CKQuery(recordType: "altIDNumber", predicate: predicate)
         
         database.fetch(withQuery: query) { result in
@@ -42,7 +40,7 @@ class StudentViewModel {
                     guard let record = try? matchResult.get() else { continue }
                     
                     let student = Student(
-                        altID: record["altIDNumber"] as? Int ?? 0,
+                        altID: record["altIDNumber"] as? String ?? "",
                         checkInTime: record["checkInTime"] as? Date,
                         checkOutTime: record["checkOutTime"] as? Date,
                         checkedInOrOut: record["checkedInOrOut"] as? Bool ?? false,
@@ -65,6 +63,38 @@ class StudentViewModel {
                 
                 DispatchQueue.main.async {
                     self.students = fetchedStudents
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func markStudentPaid(method: String) {
+        guard let student = scannedStudent else { return }
+        
+        let predicate = NSPredicate(format: "altIDNumber == %@", student.altID)
+        let query = CKQuery(recordType: "altIDNumber", predicate: predicate)
+        
+        database.fetch(withQuery: query) { result in
+            switch result {
+            case .success(let response):
+                
+                for (_, matchResult) in response.matchResults {
+                    guard let record = try? matchResult.get() else { continue }
+                    
+                    record["isPaid"] = true
+                    record["paymentMethod"] = method
+                    record["paymentTime"] = Date()
+                    record["checkedInOrOut"] = true
+                    record["checkInTime"] = Date()
+                    
+                    self.database.save(record) { _, error in
+                        if let error = error {
+                            print(error.localizedDescription)
+                        }
+                    }
                 }
                 
             case .failure(let error):

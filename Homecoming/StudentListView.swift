@@ -8,23 +8,33 @@
 import SwiftUI
 
 struct StudentListView: View {
+    
     @Environment(StudentViewModel.self) var viewModel
     @State var search = ""
-    @State private var people: [Student] = []
+    
+    var filteredStudents: [Student] {
+        if search.isEmpty {
+            return viewModel.students
+        } else {
+            return viewModel.students.filter {
+                $0.firstName.lowercased().contains(search.lowercased()) ||
+                $0.lastName.lowercased().contains(search.lowercased())
+            }
+        }
+    }
+    
     var body: some View {
-        Button("Add Student") {
-            people.append(Student(altID: 123456, checkedInOrOut: false, firstName: "George", guestCheckIn: "12:00", guestName: "N/A", guestParentPhone: "000-000-0000", guestSchool: "N/A", idNumber: 123456, lastName: "Koroulis", studentEmail: "gkoroulis7201@stu.d214.org", studentParentCell: "000-000-0000", studentParentFirstName: "Dad", studentParentLastName: "Koroulis", studentParentPhone: "000-000-0000"))
-        }
-        TextField("Enter Name", text: $search)
-            .textFieldStyle(.roundedBorder)
-            .onSubmit {
-                        
-        }
-        List {
-            ForEach(people) { person in
-                Text(person.firstName + " " + person.lastName)
+        VStack {
+            
+            TextField("Enter Name", text: $search)
+                .textFieldStyle(.roundedBorder)
+                .padding()
+            
+            List {
+                ForEach(filteredStudents) { person in
+                    Text(person.firstName + " " + person.lastName)
+                }
             }
         }
     }
 }
-
