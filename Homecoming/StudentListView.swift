@@ -15,10 +15,14 @@ struct StudentListView: View {
         Button("Add Student") {
             people.append(Student(altID: 123456, checkedInOrOut: false, firstName: "George", guestCheckIn: "12:00", guestName: "N/A", guestParentPhone: "000-000-0000", guestSchool: "N/A", idNumber: 123456, lastName: "Koroulis", studentEmail: "gkoroulis7201@stu.d214.org", studentParentCell: "000-000-0000", studentParentFirstName: "Dad", studentParentLastName: "Koroulis", studentParentPhone: "000-000-0000"))
         }
-        TextField("Enter Name", text: $search)
+        TextField("Enter Last Name", text: $search)
             .textFieldStyle(.roundedBorder)
             .onSubmit {
-                        
+                for person in people {
+                    if person.lastName == search {
+                        people.append(person)
+                    }
+                }
         }
         List {
             ForEach(people) { person in
