@@ -10,48 +10,70 @@ import AVFoundation
 import UIKit
 
 struct ScanID: View {
+    
     @Environment(StudentViewModel.self) var viewModel
-
-    @State var alternateID: String = "Waiting for QR code…"
-    @State var email = "gkoroulis7201@stu.d214.org"
+    @State var alternateID: String = "Waiting for Barcode…"
+    @State var email = ""
+    
     var body: some View {
-        Text("ScanID")
         VStack {
+            
             CameraScannerView { code in
-                alternateID = code
+                alternateID = code.trimmingCharacters(in: .whitespacesAndNewlines)
+                viewModel.setScannedAltID(alternateID)
             }
             
             VStack {
                 Spacer()
                 
-                Text(alternateID)
+                Text("Scanned Alt ID: \(alternateID)")
                     .font(.headline)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(.black.opacity(0.7))
                     .foregroundColor(.white)
+                
+                if let student = viewModel.scannedStudent {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Name: \(student.firstName) \(student.lastName)")
+                        Text("Email: \(student.studentEmail)")
+                        Text("Alt ID: \(student.altID)")
+                        Text("Checked In: \(student.checkedInOrOut ? "Yes" : "No")")
+                        Text("Guest Name: \(student.guestName)")
+                        Text("Guest School: \(student.guestSchool)")
+                        Text("Parent: \(student.studentParentFirstName) \(student.studentParentLastName)")
+                        Text("Parent Phone: \(student.studentParentPhone)")
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.gray.opacity(0.2))
+                    .cornerRadius(10)
+                } else {
+                    Text("Fetching student info…")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
             }
         }
         .ignoresSafeArea()
     }
     
-    func sendEmail() {
+    func sendEmail(to studentEmail: String) {
         let subject = "Homecoming Ticket Receipt"
-        let body = "Thank you [student name] for purchasing your [year] Homecoming ticket! \n\n This is a confirmation of your $[price] purchase, placed on [mm/dd/yyyy] at [time], however please note that this reciept is not your ticket. You must bring your ID to Homecoming in order to enter. If this was not you, please contact Ms. Monahan at laura.monahan@d214.org or visit her in the ARC in room 123. \n\n ~ John Hersey High School"
+        let body = "Thank you \(alternateID) for purchasing your Homecoming ticket!\n\nThis is a confirmation of your purchase. Please bring your ID to Homecoming to enter."
         
         let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
-        let mailToString = "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)"
+        let mailToString = "mailto:\(studentEmail)?subject=\(encodedSubject)&body=\(encodedBody)"
         
         if let url = URL(string: mailToString) {
             UIApplication.shared.open(url)
         }
-        
     }
-    
 }
 
 #Preview {
     ScanID()
+        .environment(StudentViewModel())
 }
