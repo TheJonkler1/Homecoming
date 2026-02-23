@@ -28,8 +28,8 @@ class StudentViewModel {
     }
     
     func pullFromDatabase(altID: String) {
-        let predicate = NSPredicate(format: "altIDNumber == %@", altID)
-        let query = CKQuery(recordType: "altIDNumber", predicate: predicate)
+        let predicate = NSPredicate(format: "altIDNumber == %@", scannedAltID ?? "")
+        let query = CKQuery(recordType: "Students", predicate: predicate)
         
         database.fetch(withQuery: query) { result in
             switch result {
@@ -57,6 +57,7 @@ class StudentViewModel {
                         studentParentLastName: record["studentParentLastName"] as? String ?? "",
                         studentParentPhone: record["studentParentPhone"] as? String ?? ""
                     )
+                    print(student.firstName + " " + student.lastName)
                     
                     fetchedStudents.append(student)
                 }
@@ -71,36 +72,36 @@ class StudentViewModel {
         }
     }
     
-    func markStudentPaid(method: String) {
-        guard let student = scannedStudent else { return }
-        
-        let predicate = NSPredicate(format: "altIDNumber == %@", student.altID)
-        let query = CKQuery(recordType: "altIDNumber", predicate: predicate)
-        
-        database.fetch(withQuery: query) { result in
-            switch result {
-            case .success(let response):
-                
-                for (_, matchResult) in response.matchResults {
-                    guard let record = try? matchResult.get() else { continue }
-                    
-                    record["isPaid"] = true
-                    record["paymentMethod"] = method
-                    record["paymentTime"] = Date()
-                    record["checkedInOrOut"] = true
-                    record["checkInTime"] = Date()
-                    
-                    self.database.save(record) { _, error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        }
-                    }
-                }
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
+//    func markStudentPaid(method: String) {
+//        guard let student = scannedStudent else { return }
+//        
+//        let predicate = NSPredicate(format: "altIDNumber == %@", student.altID)
+//        let query = CKQuery(recordType: "altIDNumber", predicate: predicate)
+//        
+//        database.fetch(withQuery: query) { result in
+//            switch result {
+//            case .success(let response):
+//                
+//                for (_, matchResult) in response.matchResults {
+//                    guard let record = try? matchResult.get() else { continue }
+//                    
+//                    record["isPaid"] = true
+//                    record["paymentMethod"] = method
+//                    record["paymentTime"] = Date()
+//                    record["checkedInOrOut"] = true
+//                    record["checkInTime"] = Date()
+//                    
+//                    self.database.save(record) { _, error in
+//                        if let error = error {
+//                            print(error.localizedDescription)
+//                        }
+//                    }
+//                }
+//                
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
 }
 
