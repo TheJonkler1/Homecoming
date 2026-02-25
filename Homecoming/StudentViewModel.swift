@@ -12,10 +12,16 @@ import SwiftUI
 class StudentViewModel {
     
     var students: [Student] = []
+    var students2: [Student] = []
     var scannedAltID: String?
+    var searchedLastName: String?
     
     var scannedStudent: Student? {
         students.first
+    }
+    
+    var searchedStudent: Student? {
+        students2.first
     }
     
     let database = CKContainer.default().publicCloudDatabase
@@ -25,6 +31,11 @@ class StudentViewModel {
     func setScannedAltID(_ id: String) {
         scannedAltID = id
         pullFromDatabase(altID: id)
+    }
+    
+    func setSearchLastName(_ name: String) {
+        searchedLastName = name
+        searchThroughDatabase(lastName: name)
     }
     
     func pullFromDatabase(altID: String) {
@@ -72,8 +83,8 @@ class StudentViewModel {
         }
     }
     
-    func searchThroughDatabase(altID: String) {
-        let predicate = NSPredicate(format: "altIDNumber == %@", scannedAltID ?? "")
+    func searchThroughDatabase(lastName: String) {
+        let predicate = NSPredicate(format: "lastName == %@", searchedLastName ?? "")
         let query = CKQuery(recordType: "Students", predicate: predicate)
         
         database.fetch(withQuery: query) { result in
@@ -108,7 +119,7 @@ class StudentViewModel {
                 }
                 
                 DispatchQueue.main.async {
-                    self.students = fetchedStudents
+                    self.students2 = fetchedStudents
                 }
                 
             case .failure(let error):
