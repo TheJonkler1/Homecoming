@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GuestApplication: View {
     @Environment(StudentViewModel.self) var viewModel
-
+    
     @State var guestName: String = ""
     @State var guestPhone: String = ""
     @State var guestGrade: String = ""
@@ -17,7 +17,7 @@ struct GuestApplication: View {
     @State var guestEmail: String = ""
     @State var guestAge: String = ""
     @State var paymentMethod: String = ""
-
+    
     var body: some View {
         VStack {
             TextField("Name", text: $guestName)
@@ -42,7 +42,7 @@ struct GuestApplication: View {
             TextField("Age", text: $guestAge)
                 .keyboardType(.numberPad)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-           
+            
             TextField("Payment Method (Cash or Card)", text: $paymentMethod)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()

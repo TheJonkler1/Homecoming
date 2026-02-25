@@ -12,7 +12,7 @@ class Student: Identifiable {
     let altID: String
     var checkInTime: Date?
     var checkOutTime: Date?
-    var checkedInOrOut: Bool
+    var checkedInOrOut: String
     let firstName: String
     let guestCheckIn: String
     let guestName: String
@@ -26,7 +26,7 @@ class Student: Identifiable {
     let studentParentLastName: String
     let studentParentPhone: String
     
-    init(altID: String, checkInTime: Date? = nil, checkOutTime: Date? = nil, checkedInOrOut: Bool, firstName: String, guestCheckIn: String, guestName: String, guestParentPhone: String, guestSchool: String, idNumber: Int, lastName: String, studentEmail: String, studentParentCell: String, studentParentFirstName: String, studentParentLastName: String, studentParentPhone: String) {
+    init(altID: String, checkInTime: Date? = nil, checkOutTime: Date? = nil, checkedInOrOut: String, firstName: String, guestCheckIn: String, guestName: String, guestParentPhone: String, guestSchool: String, idNumber: Int, lastName: String, studentEmail: String, studentParentCell: String, studentParentFirstName: String, studentParentLastName: String, studentParentPhone: String) {
         self.altID = altID
         self.checkInTime = checkInTime
         self.checkOutTime = checkOutTime

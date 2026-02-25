@@ -37,26 +37,26 @@ struct StudentListView: View {
                     }
                 }
             
-//            TextField("Enter Name", text: $search)
-//                .textFieldStyle(.roundedBorder)
-//                .padding()
-//            
-//                        List {
-//                            ForEach(filteredStudents) { person in
-//                                Text(person.firstName + " " + person.lastName)
-//                            }
-//            
-//                            List {
-//                                ForEach(filteredStudents) { person in
-//                                    Text(person.firstName + " " + person.lastName)
-//                                }
-//                            }
-//                            List {
-//                                ForEach(filteredStudents) { person in
-//                                    Text(person.firstName + " " + person.lastName)
-//                                }
-//                            }
-//                        }
+            //            TextField("Enter Name", text: $search)
+            //                .textFieldStyle(.roundedBorder)
+            //                .padding()
+            //
+            //                        List {
+            //                            ForEach(filteredStudents) { person in
+            //                                Text(person.firstName + " " + person.lastName)
+            //                            }
+            //
+            //                            List {
+            //                                ForEach(filteredStudents) { person in
+            //                                    Text(person.firstName + " " + person.lastName)
+            //                                }
+            //                            }
+            //                            List {
+            //                                ForEach(filteredStudents) { person in
+            //                                    Text(person.firstName + " " + person.lastName)
+            //                                }
+            //                            }
+            //                        }
         }
     }
 }
