@@ -27,15 +27,26 @@ struct StudentListView: View {
     var body: some View {
         VStack {
             TextField("Enter Name", text: $search)
-                .onSubmit {
-                    for student in viewModel.students {
+
+            Button("Search") {
+                viewModel.setSearchLastName(search)
+                if let student = viewModel.searchedStudent {
+                    for student in viewModel.students2 {
                         if search.lowercased() == student.firstName.lowercased() ||
                             search.lowercased() == student.lastName.lowercased() {
                             print(String(student.idNumber) + " " + String(student.altID))
                             ListView.append(student)
+                        } else if search == " " {
+                            ListView = viewModel.students2
                         }
                     }
                 }
+            }
+            List {
+                ForEach(ListView) { person in
+                    Text(person.firstName + " " + person.lastName)
+                }
+            }
             
             //            TextField("Enter Name", text: $search)
             //                .textFieldStyle(.roundedBorder)

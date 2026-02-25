@@ -11,10 +11,16 @@ import SwiftUI
 class StudentViewModel {
     
     var students: [Student] = []
+    var students2: [Student] = []
     var scannedAltID: String?
+    var searchedLastName: String?
     
     var scannedStudent: Student? {
         students.first
+    }
+    
+    var searchedStudent: Student? {
+        students2.first
     }
     
     let database = CKContainer.default().publicCloudDatabase
@@ -24,6 +30,11 @@ class StudentViewModel {
     func setScannedAltID(_ id: String) {
         scannedAltID = id
         pullFromDatabase(altID: id)
+    }
+    
+    func setSearchLastName(_ name: String) {
+        searchedLastName = name
+        searchThroughDatabase(lastName: name)
     }
     
     func pullFromDatabase(altID: String) {
@@ -176,6 +187,7 @@ class StudentViewModel {
                         studentParentLastName: savedRecord["studentParentLastName"] as? String ?? student.studentParentLastName,
                         studentParentPhone: savedRecord["studentParentPhone"] as? String ?? student.studentParentPhone
                     )
+                    print(student.firstName + " " + student.lastName)
                     
                     DispatchQueue.main.async {
                         print("UI Update: \(updatedStudent.checkedInOrOut)")
