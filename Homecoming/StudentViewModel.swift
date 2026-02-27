@@ -166,35 +166,35 @@ class StudentViewModel {
                 let currentStatus = record["checkedInOrOut"] as? String ?? "-"
                 print("Current DB status: \(currentStatus)")
                 
-                let dateFormatter = ISO8601DateFormatter()
+                let formatter = ISO8601DateFormatter()
+                let nowString = formatter.string(from: Date())
                 var newStatus: String
                 
-                if currentStatus == "Checked Out" {
-                    newStatus = "Checked In"
-                    record["checkInTime"] = dateFormatter.string(from: Date()) as CKRecordValue
-                    print("Checked Out → Checked In")
-                } else if currentStatus == "Checked In" {
+                if currentStatus == "-" {
                     newStatus = "Purchased"
-                    print("Checked In → Purchased")
+                    record["checkInTime"] = nowString as CKRecordValue
+                    record["checkOutTime"] = "-" as CKRecordValue
+                    print("- → Purchased (checkInTime set)")
+                    
                 } else if currentStatus == "Purchased" {
-                    newStatus = "-"
-                    print("Purchased → -")
-                } else if currentStatus == "-" {
-                    newStatus = "Checked Out"
-                    record["checkOutTime"] = dateFormatter.string(from: Date()) as CKRecordValue
-                    print("- → Checked Out")
-                } else {
                     newStatus = "Checked In"
-                    record["checkInTime"] = dateFormatter.string(from: Date()) as CKRecordValue
-                    print("Fallback → Checked In")
-                }
-                
-                if currentStatus == "Purchased" {
+                    record["checkInTime"] = nowString as CKRecordValue
+                    record["checkOutTime"] = "-" as CKRecordValue
                     record["isPaid"] = true
                     if let paymentMethod = paymentMethod {
                         record["paymentMethod"] = paymentMethod
                     }
-                    record["paymentTime"] = dateFormatter.string(from: Date()) as CKRecordValue
+                    record["paymentTime"] = nowString as CKRecordValue
+                    print("Purchased → Checked In (checkInTime updated)")
+                    
+                } else if currentStatus == "Checked In" {
+                    newStatus = "Checked Out"
+                    record["checkOutTime"] = nowString as CKRecordValue
+                    print("Checked In → Checked Out (checkOutTime set)")
+                    
+                } else {
+                    newStatus = "Checked Out"
+                    print("Checked Out → Checked Out (no change)")
                 }
                 
                 record["checkedInOrOut"] = newStatus as CKRecordValue
@@ -212,13 +212,12 @@ class StudentViewModel {
                     }
                     
                     let savedStatus = savedRecord["checkedInOrOut"] as? String ?? "UNKNOWN"
-                    print("SUCCESS: Saved status = \(savedStatus)")
+                    print("SUCCESS: \(savedStatus)")
                     
                     let checkInTimeString = savedRecord["checkInTime"] as? String
                     let checkOutTimeString = savedRecord["checkOutTime"] as? String
-                    let dateFormatter = ISO8601DateFormatter()
-                    let checkInTime = checkInTimeString != nil ? dateFormatter.date(from: checkInTimeString!) : nil
-                    let checkOutTime = checkOutTimeString != nil ? dateFormatter.date(from: checkOutTimeString!) : nil
+                    let checkInTime = checkInTimeString.flatMap { formatter.date(from: $0) }
+                    let checkOutTime = checkOutTimeString.flatMap { formatter.date(from: $0) }
                     
                     let updatedStudent = Student(
                         altID: savedRecord["altIDNumber"] as? String ?? student.altID,
@@ -238,10 +237,8 @@ class StudentViewModel {
                         studentParentLastName: savedRecord["studentParentLastName"] as? String ?? student.studentParentLastName,
                         studentParentPhone: savedRecord["studentParentPhone"] as? String ?? student.studentParentPhone
                     )
-                    print(student.firstName + " " + student.lastName)
                     
                     DispatchQueue.main.async {
-                        print("UI Update: \(updatedStudent.checkedInOrOut)")
                         if !self.students.isEmpty {
                             self.students[0] = updatedStudent
                         } else {
@@ -256,4 +253,3 @@ class StudentViewModel {
         }
     }
 }
-

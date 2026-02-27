@@ -43,5 +43,3 @@ struct StudentDetailView: View {
         .navigationTitle("Ticket Details")
     }
 }
-
-
