@@ -30,6 +30,7 @@ struct StudentListView: View {
 
             Button("Search") {
                 viewModel.setSearchLastName(search)
+                viewModel.setSearchFirstName(search)
                 if let student = viewModel.searchedStudent {
                     for student in viewModel.students2 {
                         if search.lowercased() == student.firstName.lowercased() ||
