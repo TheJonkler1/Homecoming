@@ -124,7 +124,7 @@ class StudentViewModel {
                         studentParentLastName: record["studentParentLastName"] as? String ?? "",
                         studentParentPhone: record["studentParentPhone"] as? String ?? ""
                     )
-                    print("\(student.firstName) \(student.lastName) - Status: \(student.checkedInOrOut)")
+                    print("\(student.firstName) \(student.lastName) is \(student.checkedInOrOut)")
                     
                     fetchedStudents.append(student)
                 }
