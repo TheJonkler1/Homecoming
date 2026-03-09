@@ -146,7 +146,7 @@ class StudentViewModel {
         }
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy h:mm a"
+        formatter.dateFormat = "MM/dd/yyyy 'at' h:mm a"
         formatter.timeZone = TimeZone(identifier: "America/Chicago")
         let nowString = formatter.string(from: Date())
         
