@@ -20,7 +20,7 @@ struct ScanID: View {
             CameraScannerView { code in
                 alternateID = code.trimmingCharacters(in: .whitespacesAndNewlines)
                 viewModel.setScannedAltID(alternateID)
-                showDetail = true  // Triggers navigation to StudentDetailView
+                showDetail = true 
             }
             .ignoresSafeArea()
             .frame(maxWidth: .infinity, maxHeight: .infinity)

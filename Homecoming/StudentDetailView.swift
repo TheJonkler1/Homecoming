@@ -21,11 +21,10 @@ struct StudentDetailView: View {
                         .font(.headline)
                         .foregroundColor(.blue)
                     
-                    if student.checkedInOrOut == "Purchased" {
+                    if student.checkedInOrOut == "-" {
                         Picker("Payment Method", selection: $paymentMethod) {
                             Text("Cash").tag("Cash")
                             Text("Card").tag("Card")
-                            Text("Online").tag("Online")
                         }
                         .pickerStyle(.segmented)
                     }

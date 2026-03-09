@@ -145,7 +145,10 @@ class StudentViewModel {
             return
         }
         
-        print("Toggling status for \(student.altID): \(student.checkedInOrOut)")
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy h:mm a"
+        formatter.timeZone = TimeZone(identifier: "America/Chicago")
+        let nowString = formatter.string(from: Date())
         
         let predicate = NSPredicate(format: "altIDNumber == %@", student.altID)
         let query = CKQuery(recordType: "Students", predicate: predicate)
@@ -164,17 +167,12 @@ class StudentViewModel {
                 }
                 
                 let currentStatus = record["checkedInOrOut"] as? String ?? "-"
-                print("Current DB status: \(currentStatus)")
-                
-                let formatter = ISO8601DateFormatter()
-                let nowString = formatter.string(from: Date())
                 var newStatus: String
                 
                 if currentStatus == "-" {
                     newStatus = "Purchased"
                     record["checkInTime"] = nowString as CKRecordValue
                     record["checkOutTime"] = "-" as CKRecordValue
-                    print("- → Purchased (checkInTime set)")
                     
                 } else if currentStatus == "Purchased" {
                     newStatus = "Checked In"
@@ -185,20 +183,16 @@ class StudentViewModel {
                         record["paymentMethod"] = paymentMethod
                     }
                     record["paymentTime"] = nowString as CKRecordValue
-                    print("Purchased → Checked In (checkInTime updated)")
                     
                 } else if currentStatus == "Checked In" {
                     newStatus = "Checked Out"
                     record["checkOutTime"] = nowString as CKRecordValue
-                    print("Checked In → Checked Out (checkOutTime set)")
                     
                 } else {
                     newStatus = "Checked Out"
-                    print("Checked Out → Checked Out (no change)")
                 }
                 
                 record["checkedInOrOut"] = newStatus as CKRecordValue
-                print("Saving new status: \(newStatus)")
                 
                 self.database.save(record) { savedRecord, error in
                     if let error = error {
@@ -212,12 +206,11 @@ class StudentViewModel {
                     }
                     
                     let savedStatus = savedRecord["checkedInOrOut"] as? String ?? "UNKNOWN"
-                    print("SUCCESS: \(savedStatus)")
                     
                     let checkInTimeString = savedRecord["checkInTime"] as? String
                     let checkOutTimeString = savedRecord["checkOutTime"] as? String
-                    let checkInTime = checkInTimeString.flatMap { formatter.date(from: $0) }
-                    let checkOutTime = checkOutTimeString.flatMap { formatter.date(from: $0) }
+                    let checkInTime = checkInTimeString == "-" ? nil : checkInTimeString.flatMap { formatter.date(from: $0) }
+                    let checkOutTime = checkOutTimeString == "-" ? nil : checkOutTimeString.flatMap { formatter.date(from: $0) }
                     
                     let updatedStudent = Student(
                         altID: savedRecord["altIDNumber"] as? String ?? student.altID,
