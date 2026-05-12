@@ -67,15 +67,7 @@ struct StudentDetailView: View {
     func sendEmail(to studentEmail: String) {
         if let student = viewModel.scannedStudent {
             let subject = "Homecoming Ticket Receipt"
-            let body = """
-            Thank you \(student.firstName) \(student.lastName) for purchasing your Homecoming ticket!
-
-            This is a confirmation of your purchase at \(student.checkInTime ?? Date()). Please bring your ID to Homecoming to enter. Note that this email is only a receipt for your ticket and cannot be used as a ticket.
-
-            If you have any questions, comments, or concerns, please email Mrs. Monahan at laura.monahan@d214.org or visit her in the ARC.
-
-            Happy Homecoming!
-            """
+            let body = "Thank you \(student.firstName) \(student.lastName) for purchasing your Homecoming ticket! \n\nThis is a confirmation of your purchase at \(student.checkInTime ?? Date()). Please bring your ID to Homecoming to enter. Note that this email is only a receipt for your ticket and cannot be used as a ticket. \n\n If you have any questions, comments, or concerns, please email Mrs. Monahan at laura.monahan@d214.org or visit her in the ARC. \n\nHappy Homecoming!"
 
             let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
